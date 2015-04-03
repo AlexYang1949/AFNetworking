@@ -553,7 +553,10 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
 
 static UIImage * AFImageWithDataAtScale(NSData *data, CGFloat scale) {
     UIImage *image = [[UIImage alloc] initWithData:data];
-
+    if (image.images) {
+        return image;
+    }
+    
     return [[UIImage alloc] initWithCGImage:[image CGImage] scale:scale orientation:image.imageOrientation];
 }
 
@@ -570,10 +573,11 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
     } else if ([response.MIMEType isEqualToString:@"image/jpeg"]) {
         imageRef = CGImageCreateWithJPEGDataProvider(dataProvider, NULL, true, kCGRenderingIntentDefault);
 
-        // CGImageCreateWithJPEGDataProvider does not properly handle CMKY, so if so, fall back to AFImageWithDataAtScale
         if (imageRef) {
             CGColorSpaceRef imageColorSpace = CGImageGetColorSpace(imageRef);
             CGColorSpaceModel imageColorSpaceModel = CGColorSpaceGetModel(imageColorSpace);
+
+            // CGImageCreateWithJPEGDataProvider does not properly handle CMKY, so fall back to AFImageWithDataAtScale
             if (imageColorSpaceModel == kCGColorSpaceModelCMYK) {
                 CGImageRelease(imageRef);
                 imageRef = NULL;
@@ -605,7 +609,8 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
         return image;
     }
 
-    size_t bytesPerRow = 0; // CGImageGetBytesPerRow() calculates incorrectly in iOS 5.0, so defer to CGBitmapContextCreate
+    // CGImageGetBytesPerRow() calculates incorrectly in iOS 5.0, so defer to CGBitmapContextCreate
+    size_t bytesPerRow = 0;
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGColorSpaceModel colorSpaceModel = CGColorSpaceGetModel(colorSpace);
     CGBitmapInfo bitmapInfo = CGImageGetBitmapInfo(imageRef);
