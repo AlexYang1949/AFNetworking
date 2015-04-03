@@ -95,7 +95,7 @@ typedef NS_ENUM(NSUInteger, AFHTTPRequestQueryStringSerializationStyle) {
 @property (nonatomic, assign) NSURLRequestCachePolicy cachePolicy;
 
 /**
- 设置是否处理Cookies
+ 设置是否处理Cookies 
  Whether created requests should use the default cookie handling. `YES` by default.
 
  @see NSMutableURLRequest -setHTTPShouldHandleCookies:
@@ -131,7 +131,7 @@ typedef NS_ENUM(NSUInteger, AFHTTPRequestQueryStringSerializationStyle) {
 ///---------------------------------------
 
 /**
- 设置HTTP请求首部
+ 设置HTTP请求首部5
  Default HTTP header field values to be applied to serialized requests. By default, these include the following:
  客户端可以处理的语言
  - `Accept-Language` with the contents of `NSLocale +preferredLanguages`
@@ -159,6 +159,7 @@ typedef NS_ENUM(NSUInteger, AFHTTPRequestQueryStringSerializationStyle) {
 forHTTPHeaderField:(NSString *)field;
 
 /**
+ 载请求序列中设置HTTP头部文件
  Returns the value for the HTTP headers set in the request serializer.
 
  @param field The HTTP header to retrieve the default value for
@@ -201,7 +202,7 @@ forHTTPHeaderField:(NSString *)field;
 @property (nonatomic, strong) NSSet *HTTPMethodsEncodingParametersInURI;
 
 /**
- 设置
+ 通过进行预设置类型的查询查询字符串序列化
  Set the method of query string serialization according to one of the pre-defined styles.
 
  @param style The serialization style.
@@ -211,6 +212,7 @@ forHTTPHeaderField:(NSString *)field;
 - (void)setQueryStringSerializationWithStyle:(AFHTTPRequestQueryStringSerializationStyle)style;
 
 /**
+ 使用block进行查询字符串序列化
  Set the a custom method of query string serialization according to the specified block.
 
  @param block A block that defines a process of encoding parameters into a query string. This block returns the query string and takes three arguments: the request, the parameters to encode, and the error that occurred when attempting to encode parameters for the given request.
@@ -222,6 +224,7 @@ forHTTPHeaderField:(NSString *)field;
 ///-------------------------------
 
 /**
+ 已废
  @deprecated This method has been deprecated. Use -requestWithMethod:URLString:parameters:error: instead.
  */
 - (NSMutableURLRequest *)requestWithMethod:(NSString *)method
@@ -229,6 +232,7 @@ forHTTPHeaderField:(NSString *)field;
                                 parameters:(id)parameters DEPRECATED_ATTRIBUTE;
 
 /**
+ 
  Creates an `NSMutableURLRequest` object with the specified HTTP method and URL string.
 
  If the HTTP method is `GET`, `HEAD`, or `DELETE`, the parameters will be used to construct a url-encoded query string that is appended to the request's URL. Otherwise, the parameters will be encoded according to the value of the `parameterEncoding` property, and set as the request body.
@@ -344,6 +348,7 @@ forHTTPHeaderField:(NSString *)field;
                          mimeType:(NSString *)mimeType;
 
 /**
+ 附加Content-Disposition 和Content-Type主体中的对象类型
  Appends the HTTP header `Content-Disposition: file; filename=#{filename}; name=#{name}"` and `Content-Type: #{mimeType}`, followed by the encoded file data and the multipart form boundary.
 
  @param data The data to be encoded and appended to the form data.

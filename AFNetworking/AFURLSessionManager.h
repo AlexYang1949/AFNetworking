@@ -27,6 +27,7 @@
 #import "AFSecurityPolicy.h"
 #import "AFNetworkReachabilityManager.h"
 
+
 #ifndef NS_DESIGNATED_INITIALIZER
 #if __has_attribute(objc_designated_initializer)
 #define NS_DESIGNATED_INITIALIZER __attribute__((objc_designated_initializer))
@@ -164,11 +165,14 @@
 @interface AFURLSessionManager : NSObject <NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate, NSURLSessionDownloadDelegate, NSSecureCoding, NSCopying>
 
 /**
+ 管理的session
  The managed session.
  */
+
 @property (readonly, nonatomic, strong) NSURLSession *session;
 
 /**
+ 操作队列
  The operation queue on which delegate callbacks are run.
  */
 @property (readonly, nonatomic, strong) NSOperationQueue *operationQueue;
@@ -249,10 +253,11 @@
 ///---------------------------------
 
 /**
+ 
  Whether to attempt to retry creation of upload tasks for background sessions when initial call returns `nil`. `NO` by default.
 
  @bug As of iOS 7.0, there is a bug where upload tasks created for background tasks are sometimes `nil`. As a workaround, if this property is `YES`, AFNetworking will follow Apple's recommendation to try creating the task again.
-
+ 
  @see https://github.com/AFNetworking/AFNetworking/issues/1675
  */
 @property (nonatomic, assign) BOOL attemptsToRecreateUploadTasksForBackgroundSessions;
@@ -262,6 +267,7 @@
 ///---------------------
 
 /**
+ 创建一个队session的管理器
  Creates and returns a manager for a session created with the specified configuration. This is the designated initializer.
 
  @param configuration The configuration used to create the managed session.
@@ -271,6 +277,7 @@
 - (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)configuration NS_DESIGNATED_INITIALIZER;
 
 /**
+ 取消管理session，并且设置是否挂起tasks
  Invalidates the managed session, optionally canceling pending tasks.
 
  @param cancelPendingTasks Whether or not to cancel pending tasks.

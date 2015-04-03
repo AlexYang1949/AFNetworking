@@ -787,11 +787,13 @@ static NSString * const AFNSURLSessionTaskDidSuspendNotification = @"com.alamofi
                                              destination:(NSURL * (^)(NSURL *targetPath, NSURLResponse *response))destination
                                        completionHandler:(void (^)(NSURLResponse *response, NSURL *filePath, NSError *error))completionHandler
 {
+    // 创建一个下载任务
     __block NSURLSessionDownloadTask *downloadTask = nil;
+    // 异步进行数据的下载，传入之前下载未完成的部分
     dispatch_sync(url_session_manager_creation_queue(), ^{
         downloadTask = [self.session downloadTaskWithResumeData:resumeData];
     });
-
+    // 给
     [self addDelegateForDownloadTask:downloadTask progress:progress destination:destination completionHandler:completionHandler];
 
     return downloadTask;

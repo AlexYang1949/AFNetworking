@@ -331,7 +331,7 @@
     return dataTask;
 }
 
-#pragma mark - NSObject              JSON -> 模型
+#pragma mark - NSObject   JSON -> 模型
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"<%@: %p, baseURL: %@, session: %@, operationQueue: %@>", NSStringFromClass([self class]), self, [self.baseURL absoluteString], self.session, self.operationQueue];
